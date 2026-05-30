@@ -1,7 +1,12 @@
 # Bounded
 
-A strange attractor observatory — a single self-contained HTML page that renders
-animated strange attractors in the browser.
+A free-will exercise: a self-contained web page built by a Claude agent given a
+single open-ended prompt — `Build whatever you want, however you want.` — and
+nothing else.
+
+The result is *Bounded: A Strange Attractor Observatory*, a single
+self-contained HTML page that renders animated strange attractors in the
+browser.
 
 ## Live site
 
