@@ -291,6 +291,11 @@
       <span>Drift</span>
     </div>
     <div class="sep"></div>
+    <div class="toggle" id="sound" role="switch" aria-checked="false">
+      <span class="track"><span class="knob"></span></span>
+      <span>Sound</span>
+    </div>
+    <div class="sep"></div>
     <div class="group" id="sizes"></div>
     <button class="btn" id="save">Save image</button>
   </div>
@@ -366,6 +371,7 @@
     p: Object.assign({}, ATTRACTORS.clifford.presets[0]),
     palette: "ember",
     drift: false,
+    sound: false,
   };
 
   // ----- canvas / buffers -----
@@ -587,11 +593,183 @@
     return Object.assign({}, A.presets[(Math.random()*A.presets.length)|0]);
   }
 
+  // ----- ambient sonification: the form, made audible -----
+  // A slow drone choir tuned to the attractor. Four voices carry the parameters,
+  // a root holds the floor, a faint shimmer rides the chaos. Everything stays
+  // consonant and quiet — bounded, like the forms themselves. Pure Web Audio;
+  // even the reverb impulse is synthesised at runtime, so the page stays one file.
+  const audio = (() => {
+    const ROOT = 55;                  // A1 — the absolute floor (Hz)
+    const VOICE_OCT = [0, 1, 1, 2];   // register band per parameter voice
+    // each family: a mode (semitone steps over ~2 octaves) + tonal base + timbre
+    const FAMILIES = {
+      clifford: { scale:[0,3,5,7,10,12,15,17,19,22,24], base:0,  type:"triangle" }, // minor pentatonic, warm
+      dejong:   { scale:[0,2,3,5,7,9,10,12,14,15,17,19,22,24], base:5, type:"sine" }, // Dorian, open
+      svensson: { scale:[0,2,4,6,7,9,11,12,14,16,18,19,21,23,24], base:12, type:"triangle" }, // Lydian, floating
+      dream:    { scale:[0,2,4,6,8,10,12,14,16,18,20,22,24], base:7, type:"sine" }, // whole-tone, airless
+    };
+    const PAL_CUTOFF = { ember:1700, bone:1500, orchid:2600, verdant:3100, ice:5200 };
+
+    let ctx = null, master = null, tilt = null, bus = null;
+    let voices = [], root = null, shimmer = null;
+    let started = false, on = false, lastTick = 0;
+
+    const mtof = (semis) => ROOT * Math.pow(2, semis/12);
+
+    // squash the Lyapunov estimate (chaotic forms ~0.1–0.9) into 0..1 "aliveness"
+    function chaosOf(){
+      const s = lyapunov(state.family, state.p);
+      if (!s.bounded) return 0;
+      return Math.max(0, Math.min(1, (s.lyap - 0.1) / 0.7));
+    }
+
+    // a parameter's value -> a pitch on the family's scale, in voice i's register
+    function targetFreq(i){
+      const A = ATTRACTORS[state.family], fam = FAMILIES[state.family];
+      const [lo,hi] = A.ranges[i];
+      const k = ["a","b","c","d"][i];
+      let t = (state.p[k] - lo) / (hi - lo);
+      t = Math.max(0, Math.min(1, t));
+      const idx = Math.round(t * (fam.scale.length - 1));
+      return mtof(fam.base + fam.scale[idx] + 12*VOICE_OCT[i]);
+    }
+
+    // exponentially-decaying filtered noise — a synthesised reverb tail
+    function makeIR(){
+      const len = Math.floor(ctx.sampleRate * 3.6);
+      const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (let ch=0; ch<2; ch++){
+        const d = buf.getChannelData(ch);
+        for (let i=0;i<len;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/len, 2.6);
+      }
+      return buf;
+    }
+
+    // a voice = n detuned oscillators + a gain that breathes on its own slow LFO
+    function mkVoice(baseGain, n){
+      const g = ctx.createGain(); g.gain.value = baseGain;
+      const oscs = [];
+      for (let j=0;j<n;j++){
+        const o = ctx.createOscillator();
+        o.type = "sine"; o.connect(g); o.start();
+        oscs.push(o);
+      }
+      g.connect(bus);
+      const lfo = ctx.createOscillator(), lg = ctx.createGain();
+      lfo.frequency.value = 0.05 + Math.random()*0.10;
+      lg.gain.value = baseGain*0.4;
+      lfo.connect(lg); lg.connect(g.gain); lfo.start();
+      return { oscs, g };
+    }
+
+    function build(){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      ctx = new AC();
+
+      master = ctx.createGain(); master.gain.value = 0;   // faded in on enable
+      const comp = ctx.createDynamicsCompressor();         // soft limiter, no clipping
+      comp.threshold.value = -14; comp.knee.value = 30; comp.ratio.value = 12;
+      comp.attack.value = 0.004; comp.release.value = 0.25;
+
+      tilt = ctx.createBiquadFilter();                     // palette warmth
+      tilt.type = "lowpass"; tilt.frequency.value = 2200; tilt.Q.value = 0.5;
+
+      const conv = ctx.createConvolver(); conv.buffer = makeIR();
+      const wet = ctx.createGain(); wet.gain.value = 0.5;
+      const dry = ctx.createGain(); dry.gain.value = 0.55;
+
+      bus = ctx.createGain();
+      bus.connect(tilt);
+      tilt.connect(dry); tilt.connect(conv); conv.connect(wet);
+      dry.connect(master); wet.connect(master);
+      master.connect(comp); comp.connect(ctx.destination);
+
+      root   = mkVoice(0.10, 2);                 // the floor: fundamental + octave
+      voices = [0,1,2,3].map(() => mkVoice(0.08, 2)); // the four parameters
+      shimmer = mkVoice(0, 1);                   // high, quiet, chaos-driven
+
+      applyTimbre();
+      started = true;
+      return true;
+    }
+
+    function applyTimbre(){
+      const t = FAMILIES[state.family].type;
+      voices.forEach(v => v.oscs.forEach(o => o.type = t));
+      root.oscs.forEach(o => o.type = "sine");
+      shimmer.oscs.forEach(o => o.type = "sine");
+    }
+
+    // retune every voice toward the current form, gliding over `tc` seconds
+    function retune(tc){
+      const now = ctx.currentTime, c = chaosOf(), det = 2 + c*16;
+      voices.forEach((v, i) => {
+        const f = targetFreq(i);
+        v.oscs.forEach((o, j) => {
+          o.frequency.setTargetAtTime(f, now, tc);
+          o.detune.setTargetAtTime(j===0 ? -det : det, now, tc);
+        });
+      });
+      const fam = FAMILIES[state.family], rf = mtof(fam.base);
+      root.oscs.forEach((o, j) => o.frequency.setTargetAtTime(j===0 ? rf : rf*2, now, tc));
+      shimmer.oscs.forEach(o => o.frequency.setTargetAtTime(mtof(fam.base + 48), now, tc));
+      shimmer.g.gain.setTargetAtTime(c*0.022, now, 1.2);
+      tilt.frequency.setTargetAtTime(PAL_CUTOFF[state.palette] || 2400, now, 0.8);
+    }
+
+    // a soft struck swell on the new root — "a form has emerged"
+    function accent(){
+      const t0 = ctx.currentTime, f = mtof(FAMILIES[state.family].base + 12);
+      [[1,0.06],[2.01,0.03]].forEach(([mult, peak]) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = "sine"; o.frequency.value = f*mult;
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak, t0+0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0+3.2);
+        o.connect(g); g.connect(bus);
+        o.start(t0); o.stop(t0+3.4);
+      });
+    }
+
+    return {
+      enable(){
+        if (!started && !build()) return;
+        if (ctx.state === "suspended") ctx.resume();
+        on = true;
+        retune(0.4);
+        const t = ctx.currentTime;
+        master.gain.cancelScheduledValues(t);
+        master.gain.setValueAtTime(master.gain.value, t);
+        master.gain.linearRampToValueAtTime(0.7, t + 2.0);
+      },
+      disable(){
+        on = false;
+        if (!started) return;
+        const t = ctx.currentTime;
+        master.gain.cancelScheduledValues(t);
+        master.gain.setValueAtTime(master.gain.value, t);
+        master.gain.linearRampToValueAtTime(0, t + 1.4);
+        setTimeout(() => { if (!on && ctx) ctx.suspend(); }, 1600);
+      },
+      onMutate(){ if (started && on){ retune(0.6); accent(); } },
+      onFamily(){ if (started && on){ applyTimbre(); retune(0.6); accent(); } },
+      onPalette(){ if (started && on) retune(0.7); },
+      tick(now){
+        if (!started || !on || !state.drift) return;
+        if (now - lastTick < 95) return;          // ~10 Hz control rate
+        lastTick = now;
+        retune(0.18);                             // glide with the drifting form
+      },
+    };
+  })();
+
   function mutate(){
     state.p = randomParams(state.family);
     if (state.drift) startDrift();
     reset(true);
     updatePlacard();
+    audio.onMutate();
   }
 
   // ----- UI build -----
@@ -609,6 +787,7 @@
       if (state.drift) startDrift();
       reset(true);
       updatePlacard();
+      audio.onFamily();
     });
     famHost.appendChild(b);
   });
@@ -627,6 +806,7 @@
       document.querySelectorAll("#palettes .swatch").forEach(t =>
         t.classList.toggle("active", t.dataset.key===key));
       render();
+      audio.onPalette();
     });
     palHost.appendChild(s);
   });
@@ -639,6 +819,14 @@
     driftEl.classList.toggle("on", state.drift);
     driftEl.setAttribute("aria-checked", state.drift ? "true":"false");
     if (state.drift) startDrift();
+  });
+
+  const soundEl = document.getElementById("sound");
+  soundEl.addEventListener("click", () => {
+    state.sound = !state.sound;
+    soundEl.classList.toggle("on", state.sound);
+    soundEl.setAttribute("aria-checked", state.sound ? "true":"false");
+    if (state.sound) audio.enable(); else audio.disable();
   });
 
   const plate = document.getElementById("plate");
@@ -660,6 +848,7 @@
     if (exporting){ requestAnimationFrame(loop); return; }
     if (state.drift) evolveDrift();
     else iterate(perFrame);
+    audio.tick(now);
 
     if (now - lastRender > RENDER_MS){
       render();
