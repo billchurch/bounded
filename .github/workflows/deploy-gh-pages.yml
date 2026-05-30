@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'bounded.html'
+      - 'og-image.png'
       - '.github/workflows/deploy-gh-pages.yml'
   workflow_dispatch:
     inputs:
@@ -33,6 +34,7 @@ jobs:
         run: |
           mkdir -p _site
           cp bounded.html _site/index.html
+          cp og-image.png _site/og-image.png
 
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
