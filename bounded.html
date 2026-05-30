@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Bounded — A Strange Attractor Observatory</title>
+<!-- inline SVG favicon: a strange-attractor (3:2 Lissajous) knot in the ember palette; keeps the single-file model -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjZjOTViIi8+PHN0b3Agb2Zmc2V0PSIuNTUiIHN0b3AtY29sb3I9IiNlMDczMWYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5YzJhMTgiLz48L2xpbmVhckdyYWRpZW50PjxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249Ii44IiByZXN1bHQ9ImIiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49ImIiLz48ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz48L2ZlTWVyZ2U+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgcng9IjciIGZpbGw9IiMwNjA1MGEiLz48cGF0aCBkPSJNMjcuMCAxNi4wIEwyNi45MiAxNi43OSBMMjYuNyAxNy41OCBMMjYuMzIgMTguMzYgTDI1LjggMTkuMTMgTDI1LjE1IDE5Ljg3IEwyNC4zNiAyMC41OSBMMjMuNDcgMjEuMjkgTDIyLjQ3IDIxLjk1IEwyMS4zNyAyMi41NyBMMjAuMjEgMjMuMTYgTDE4Ljk5IDIzLjcgTDE3LjcyIDI0LjE5IEwxNi40MyAyNC42MyBMMTUuMTQgMjUuMDIgTDEzLjg1IDI1LjM1IEwxMi42IDI1LjYyIEwxMS4zOSAyNS44NCBMMTAuMjUgMjYuMCBMOS4xOSAyNi4wOSBMOC4yMiAyNi4xMiBMNy4zNiAyNi4wOSBMNi42MiAyNi4wIEw2LjAxIDI1Ljg0IEw1LjU0IDI1LjYyIEw1LjIxIDI1LjM1IEw1LjAzIDI1LjAyIEw1LjAxIDI0LjYzIEw1LjE0IDI0LjE5IEw1LjQxIDIzLjcgTDUuODQgMjMuMTYgTDYuNCAyMi41NyBMNy4xIDIxLjk1IEw3LjkyIDIxLjI5IEw4Ljg2IDIwLjU5IEw5Ljg5IDE5Ljg3IEwxMS4wMSAxOS4xMyBMMTIuMTkgMTguMzYgTDEzLjQzIDE3LjU4IEwxNC43MSAxNi43OSBMMTYuMCAxNi4wIEwxNy4yOSAxNS4yMSBMMTguNTcgMTQuNDIgTDE5LjgxIDEzLjY0IEwyMC45OSAxMi44NyBMMjIuMTEgMTIuMTMgTDIzLjE0IDExLjQxIEwyNC4wOCAxMC43MSBMMjQuOSAxMC4wNSBMMjUuNiA5LjQzIEwyNi4xNiA4Ljg0IEwyNi41OSA4LjMgTDI2Ljg2IDcuODEgTDI2Ljk5IDcuMzcgTDI2Ljk3IDYuOTggTDI2Ljc5IDYuNjUgTDI2LjQ2IDYuMzggTDI1Ljk5IDYuMTYgTDI1LjM4IDYuMCBMMjQuNjQgNS45MSBMMjMuNzggNS44OCBMMjIuODEgNS45MSBMMjEuNzUgNi4wIEwyMC42MSA2LjE2IEwxOS40IDYuMzggTDE4LjE1IDYuNjUgTDE2Ljg2IDYuOTggTDE1LjU3IDcuMzcgTDE0LjI4IDcuODEgTDEzLjAxIDguMyBMMTEuNzkgOC44NCBMMTAuNjMgOS40MyBMOS41MyAxMC4wNSBMOC41MyAxMC43MSBMNy42NCAxMS40MSBMNi44NSAxMi4xMyBMNi4yIDEyLjg3IEw1LjY4IDEzLjY0IEw1LjMgMTQuNDIgTDUuMDggMTUuMjEgTDUuMCAxNi4wIEw1LjA4IDE2Ljc5IEw1LjMgMTcuNTggTDUuNjggMTguMzYgTDYuMiAxOS4xMyBMNi44NSAxOS44NyBMNy42NCAyMC41OSBMOC41MyAyMS4yOSBMOS41MyAyMS45NSBMMTAuNjMgMjIuNTcgTDExLjc5IDIzLjE2IEwxMy4wMSAyMy43IEwxNC4yOCAyNC4xOSBMMTUuNTcgMjQuNjMgTDE2Ljg2IDI1LjAyIEwxOC4xNSAyNS4zNSBMMTkuNCAyNS42MiBMMjAuNjEgMjUuODQgTDIxLjc1IDI2LjAgTDIyLjgxIDI2LjA5IEwyMy43OCAyNi4xMiBMMjQuNjQgMjYuMDkgTDI1LjM4IDI2LjAgTDI1Ljk5IDI1Ljg0IEwyNi40NiAyNS42MiBMMjYuNzkgMjUuMzUgTDI2Ljk3IDI1LjAyIEwyNi45OSAyNC42MyBMMjYuODYgMjQuMTkgTDI2LjU5IDIzLjcgTDI2LjE2IDIzLjE2IEwyNS42IDIyLjU3IEwyNC45IDIxLjk1IEwyNC4wOCAyMS4yOSBMMjMuMTQgMjAuNTkgTDIyLjExIDE5Ljg3IEwyMC45OSAxOS4xMyBMMTkuODEgMTguMzYgTDE4LjU3IDE3LjU4IEwxNy4yOSAxNi43OSBMMTYuMCAxNi4wIEwxNC43MSAxNS4yMSBMMTMuNDMgMTQuNDIgTDEyLjE5IDEzLjY0IEwxMS4wMSAxMi44NyBMOS44OSAxMi4xMyBMOC44NiAxMS40MSBMNy45MiAxMC43MSBMNy4xIDEwLjA1IEw2LjQgOS40MyBMNS44NCA4Ljg0IEw1LjQxIDguMyBMNS4xNCA3LjgxIEw1LjAxIDcuMzcgTDUuMDMgNi45OCBMNS4yMSA2LjY1IEw1LjU0IDYuMzggTDYuMDEgNi4xNiBMNi42MiA2LjAgTDcuMzYgNS45MSBMOC4yMiA1Ljg4IEw5LjE5IDUuOTEgTDEwLjI1IDYuMCBMMTEuMzkgNi4xNiBMMTIuNiA2LjM4IEwxMy44NSA2LjY1IEwxNS4xNCA2Ljk4IEwxNi40MyA3LjM3IEwxNy43MiA3LjgxIEwxOC45OSA4LjMgTDIwLjIxIDguODQgTDIxLjM3IDkuNDMgTDIyLjQ3IDEwLjA1IEwyMy40NyAxMC43MSBMMjQuMzYgMTEuNDEgTDI1LjE1IDEyLjEzIEwyNS44IDEyLjg3IEwyNi4zMiAxMy42NCBMMjYuNyAxNC40MiBMMjYuOTIgMTUuMjEgTDI3LjAgMTYuMCBaIiBmaWxsPSJub25lIiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbHRlcj0idXJsKCNnbG93KSIvPjwvc3ZnPg==" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -194,6 +196,11 @@
   .toggle.on .track{ background:rgba(201,161,75,0.18); border-color:var(--accent); }
   .toggle.on .knob{ transform:translateX(18px); background:var(--accent); }
 
+  .glabel{ color:var(--ink-faint); font-size:10px; letter-spacing:0.18em;
+    text-transform:uppercase; margin-right:6px; user-select:none; }
+  .beats{ transition:opacity .35s ease; }
+  .beats.idle{ opacity:0.42; }
+
   footer{
     margin-top:clamp(10px,2vh,16px);
     font-family:"Fraunces",serif; font-style:italic; font-weight:340;
@@ -292,6 +299,10 @@
       <span>Drift</span>
     </div>
     <div class="sep"></div>
+    <div class="group beats" id="beats" title="Percussion while drifting — audible when Drift and Sound are on">
+      <span class="glabel">Beat</span>
+    </div>
+    <div class="sep"></div>
     <div class="toggle" id="sound" role="switch" aria-checked="false">
       <span class="track"><span class="knob"></span></span>
       <span>Sound</span>
@@ -373,6 +384,7 @@
     palette: "ember",
     drift: false,
     sound: false,
+    beat: "drive",   // off | drive — synthwave percussion under drift
   };
 
   // ----- canvas / buffers -----
@@ -622,6 +634,9 @@
     let ctx = null, master = null, tilt = null, bus = null;
     let voices = [], root = null, shimmer = null;
     let started = false, on = false, lastTick = 0;
+    // percussion (drift-only): its own bus, a sidechain VCA, a lookahead scheduler
+    let percBus = null, pump = null, noiseBuf = null, beat = state.beat;
+    let schedTimer = null, nextNote = 0, percStep = 0, driveStart = 0;
 
     const mtof = (semis) => ROOT * Math.pow(2, semis/12);
 
@@ -651,6 +666,15 @@
         const d = buf.getChannelData(ch);
         for (let i=0;i<len;i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/len, 2.6);
       }
+      return buf;
+    }
+
+    // a short white-noise buffer, reused by every percussive transient
+    function makeNoise(){
+      const len = Math.floor(ctx.sampleRate * 1.2);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i=0;i<len;i++) d[i] = Math.random()*2-1;
       return buf;
     }
 
@@ -691,8 +715,20 @@
       bus = ctx.createGain();
       bus.connect(tilt);
       tilt.connect(dry); tilt.connect(conv); conv.connect(wet);
-      dry.connect(master); wet.connect(master);
+      // sidechain VCA: the drone + reverb wash pass through here so the kick can
+      // duck them (the synthwave "pump"). The bass routes in too (see pBass).
+      pump = ctx.createGain(); pump.gain.value = 1;
+      dry.connect(pump); wet.connect(pump);
+      pump.connect(master);
       master.connect(comp); comp.connect(ctx.destination);
+
+      // drums hit the master full and un-ducked; only their reverb tail rides the
+      // pump. percBus.gain is faded in/out with drift, like a mute.
+      percBus = ctx.createGain(); percBus.gain.value = 0;
+      const percWet = ctx.createGain(); percWet.gain.value = 0.20;
+      percBus.connect(master);
+      percBus.connect(percWet); percWet.connect(conv);
+      noiseBuf = makeNoise();
 
       root   = mkVoice(0.10, 2);                 // the floor: fundamental + octave
       voices = [0,1,2,3].map(() => mkVoice(0.08, 2)); // the four parameters
@@ -741,6 +777,119 @@
       });
     }
 
+    // ----- "Drive": a synthwave engine that builds in under drift -----
+    // A locked grid is the point: the form roams, the beat holds it — a boundary
+    // you can feel. Tempo is fixed; the form colours *texture*, not speed, and the
+    // arrangement builds layer by layer once drift begins.
+    const BPM = 112;
+    const QUARTER = 60 / BPM;        // seconds per quarter note
+    const SIX = QUARTER / 4;         // a sixteenth — the scheduling grid
+    const BAR = QUARTER * 4;
+    const DUCK = 0.5;                // sidechain depth: how far the kick pulls down
+    // bar at which each layer enters — the build (full groove by ~8.5s)
+    const BUILD = { kick:0, hat:1, snare:2, bass:4 };
+    const ARP = [0, 2, 4, 2, 0, 4, 5, 4];   // riff shape, as indices into the family scale
+    function barOf(t){ return Math.floor((t - driveStart) / BAR); }
+
+    // a low sine "kick" tuned to the family root, so it stays consonant with the drone
+    function pKick(t, peak){
+      const f0 = mtof(FAMILIES[state.family].base);
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(f0*2.4, t);
+      o.frequency.exponentialRampToValueAtTime(Math.max(32, f0*0.92), t+0.09);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t+0.006);
+      g.gain.exponentialRampToValueAtTime(0.0001, t+0.33);
+      o.connect(g); g.connect(percBus); o.start(t); o.stop(t+0.4);
+    }
+    // filtered noise burst — hats and the body of the clap
+    function pNoise(t, peak, type, freq, q, dur){
+      const src = ctx.createBufferSource(); src.buffer = noiseBuf;
+      const f = ctx.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t+0.002);
+      g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+      src.connect(f); f.connect(g); g.connect(percBus);
+      src.start(t); src.stop(t+dur+0.05);
+    }
+    // a clap on the backbeat — a quick flam of noise bursts
+    function pClap(t, peak){
+      [0, 0.009, 0.018].forEach((d,i) =>
+        pNoise(t+d, peak*(i===2?1:0.55), "bandpass", 2000, 0.5, i===2?0.14:0.03));
+      pNoise(t, peak*0.5, "highpass", 4000, 0.5, 0.05);
+    }
+    // two detuned saws through a resonant lowpass — the synthwave bass.
+    // pitched on the family scale (melodically tied to the form, like the drone),
+    // and routed through the sidechain so it pumps with the kick.
+    function pBass(t, eighth, c){
+      const fam = FAMILIES[state.family];
+      const deg = fam.scale[ARP[eighth] % fam.scale.length];
+      const oct = (c > 0.6 && eighth >= 6) ? 12 : 0;     // chaos reaches up on the turn
+      const f = mtof(fam.base + deg + oct);
+      const o = ctx.createOscillator(), o2 = ctx.createOscillator();
+      const lp = ctx.createBiquadFilter(), g = ctx.createGain();
+      o.type = "sawtooth"; o2.type = "sawtooth";
+      o.detune.value = 7; o2.detune.value = -7;
+      o.frequency.value = f; o2.frequency.value = f;
+      lp.type = "lowpass"; lp.Q.value = 6;
+      lp.frequency.value = 320 + c*1500;                 // the form opens the filter
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.06, t+0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + SIX*1.6);   // gated, punchy
+      o.connect(lp); o2.connect(lp); lp.connect(g); g.connect(pump);
+      o.start(t); o2.start(t); o.stop(t+SIX*2); o2.stop(t+SIX*2);
+    }
+
+    // the sidechain pump: each kick pulls the drone + bus + bass down, then it
+    // breathes back over most of a beat. This is the glue that fuses beat and drone.
+    function duck(t){
+      pump.gain.cancelScheduledValues(t);
+      pump.gain.setValueAtTime(DUCK, t);
+      pump.gain.setTargetAtTime(1, t, QUARTER*0.34);
+    }
+
+    // one sixteenth-note step of the locked grid (s = 0..15 within the bar)
+    function driveStep(s, t){
+      const c = chaosOf(), bar = barOf(t);
+      if (bar >= BUILD.kick && s % 4 === 0){ pKick(t, 0.18); duck(t); }    // four-on-the-floor
+      if (bar >= BUILD.hat){
+        const off = (s % 2 === 1);                        // offbeat sixteenths drive harder
+        pNoise(t, off ? 0.014 : 0.008, "highpass", 7800, 0.7, off ? 0.05 : 0.03);
+      }
+      if (bar >= BUILD.snare && (s === 4 || s === 12)) pClap(t, 0.085);    // backbeat
+      if (bar >= BUILD.bass && s % 2 === 0) pBass(t, s/2, c);              // eighth-note arp
+    }
+    function scheduler(){
+      if (!ctx) return;
+      const ahead = ctx.currentTime + 0.12;               // lookahead window
+      while (nextNote < ahead){
+        driveStep(percStep, nextNote);
+        nextNote += SIX;                                   // fixed sixteenth grid
+        percStep = (percStep + 1) % 16;
+      }
+    }
+    function startSched(){
+      if (schedTimer) return;
+      const t0 = ctx.currentTime + 0.06;
+      nextNote = t0; driveStart = t0; percStep = 0;        // the build counts from here
+      schedTimer = setInterval(scheduler, 25);
+    }
+    function stopSched(){ if (schedTimer){ clearInterval(schedTimer); schedTimer = null; } }
+
+    // start/stop the beat to match (sound ∧ drift ∧ mode≠off)
+    function syncPerc(){
+      if (!started) return;
+      const t = ctx.currentTime;
+      const active = on && state.drift && beat !== "off";
+      percBus.gain.cancelScheduledValues(t);
+      percBus.gain.setValueAtTime(percBus.gain.value, t);
+      percBus.gain.linearRampToValueAtTime(active ? 1 : 0, t + (active ? 0.5 : 0.6));
+      if (active) startSched();
+      else { stopSched(); pump.gain.cancelScheduledValues(t); pump.gain.setTargetAtTime(1, t, 0.1); }
+    }
+
     return {
       enable(){
         if (!started && !build()) return;
@@ -751,10 +900,12 @@
         master.gain.cancelScheduledValues(t);
         master.gain.setValueAtTime(master.gain.value, t);
         master.gain.linearRampToValueAtTime(0.7, t + 2.0);
+        syncPerc();
       },
       disable(){
         on = false;
         if (!started) return;
+        syncPerc();                               // fade + stop the beat
         const t = ctx.currentTime;
         master.gain.cancelScheduledValues(t);
         master.gain.setValueAtTime(master.gain.value, t);
@@ -764,6 +915,8 @@
       onMutate(){ if (started && on){ retune(0.6); accent(); } },
       onFamily(){ if (started && on){ applyTimbre(); retune(0.6); accent(); } },
       onPalette(){ if (started && on) retune(0.7); },
+      onDrift(){ syncPerc(); },                   // drift toggled on/off
+      setBeat(m){ beat = m; syncPerc(); },        // live audition of a mode
       tick(now){
         if (!started || !on || !state.drift) return;
         if (now - lastTick < 95) return;          // ~10 Hz control rate
@@ -828,7 +981,26 @@
     driftEl.classList.toggle("on", state.drift);
     driftEl.setAttribute("aria-checked", state.drift ? "true":"false");
     if (state.drift) startDrift();
+    audio.onDrift();
+    syncBeatsIdle();
   });
+
+  // ----- beat selector: percussion that activates with drift -----
+  const beatHost = document.getElementById("beats");
+  [["off","Off"],["drive","Drive"]].forEach(([key,label]) => {
+    const b = document.createElement("button");
+    b.className = "tab" + (key===state.beat ? " active":"");
+    b.dataset.key = key;
+    b.innerHTML = label + '<span class="u"></span>';
+    b.addEventListener("click", () => {
+      state.beat = key;
+      audio.setBeat(key);
+      beatHost.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.key===key));
+    });
+    beatHost.appendChild(b);
+  });
+  function syncBeatsIdle(){ beatHost.classList.toggle("idle", !state.drift); }
+  syncBeatsIdle();
 
   const soundEl = document.getElementById("sound");
   soundEl.addEventListener("click", () => {
